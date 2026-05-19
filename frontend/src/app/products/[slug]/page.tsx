@@ -58,9 +58,9 @@ export default function ProductDetailPage() {
     setTimeout(() => setAddedToCart(false), 2500);
   };
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
     if (!user) { toast.error('Please sign in first'); router.push('/auth/login'); return; }
-    openWhatsAppOrder({ user, product: data, quantity, shippingCharge });
+    await openWhatsAppOrder({ user, product: data, quantity, shippingCharge });
   };
 
   return (

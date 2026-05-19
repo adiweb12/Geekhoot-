@@ -6,9 +6,16 @@ interface WhatsAppOrderParams {
   product: Product;
   quantity: number;
   shippingCharge?: number;
+  location?: { lat: number; lng: number } | null;
 }
 
-export const buildWhatsAppMessage = ({ user, product, quantity, shippingCharge = 0 }: WhatsAppOrderParams): string => {
+export const buildWhatsAppMessage = ({
+  user,
+  product,
+  quantity,
+  shippingCharge = 0,
+  location,
+}: WhatsAppOrderParams): string => {
   const fullAddress = [
     user.houseName,
     user.street,
@@ -23,6 +30,10 @@ export const buildWhatsAppMessage = ({ user, product, quantity, shippingCharge =
   const subtotal = product.price * quantity;
   const total = subtotal + shippingCharge;
 
+  const locationLine = location
+    ? `📍 *Live Location*: https://maps.google.com/?q=${location.lat},${location.lng}`
+    : '';
+
   const message = `
 🛒 *New Order Request — Geekhoot*
 
@@ -31,6 +42,7 @@ Name: ${user.name}
 Phone: ${user.phone}
 Email: ${user.email}
 Address: ${fullAddress || 'Address not provided'}
+${locationLine ? `\n${locationLine}` : ''}
 
 📦 *Order Details*
 Product: ${product.name}
@@ -45,11 +57,29 @@ Please confirm the order and provide tracking details.
   return message;
 };
 
-export const openWhatsAppOrder = (params: WhatsAppOrderParams): void => {
-  const adminNumber = process.env.NEXT_PUBLIC_WHATSAPP_ADMIN_NUMBER || '919876543210';
-  const message = buildWhatsAppMessage(params);
+/** Attempt to get GPS coordinates; resolves null if denied or unavailable */
+export const captureLocation = (): Promise<{ lat: number; lng: number } | null> => {
+  return new Promise((resolve) => {
+    if (!navigator.geolocation) { resolve(null); return; }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+      () => resolve(null),
+      { timeout: 6000 }
+    );
+  });
+};
+
+// Admin WhatsApp number (country code + number, no + or spaces)
+const ADMIN_NUMBER = '918138872364';
+
+export const openWhatsAppOrder = async (
+  params: Omit<WhatsAppOrderParams, 'location'>
+): Promise<void> => {
+  // Capture GPS location for accurate delivery
+  const location = await captureLocation();
+  const message = buildWhatsAppMessage({ ...params, location });
   const encoded = encodeURIComponent(message);
-  const url = `https://wa.me/${adminNumber}?text=${encoded}`;
+  const url = `https://wa.me/${ADMIN_NUMBER}?text=${encoded}`;
   window.open(url, '_blank', 'noopener,noreferrer');
 };
 

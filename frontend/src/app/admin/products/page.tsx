@@ -89,10 +89,11 @@ export default function AdminProductsPage() {
 
       if (editProduct) {
         formData.append('existingImages', JSON.stringify(editProduct.images));
-        await api.put(`/admin/products/${editProduct.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        // Don't set Content-Type manually — axios auto-sets multipart/form-data with correct boundary
+        await api.put(`/admin/products/${editProduct.id}`, formData);
         toast.success('Product updated!');
       } else {
-        await api.post('/admin/products', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        await api.post('/admin/products', formData);
         toast.success('Product created!');
       }
 

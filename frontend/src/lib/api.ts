@@ -3,7 +3,10 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api',
   withCredentials: true,
-  headers: { 'Content-Type': 'application/json' },
+  // NOTE: Do NOT set a default Content-Type here.
+  // For multipart/form-data (image uploads), axios must auto-set the
+  // Content-Type with the correct boundary. A hardcoded 'application/json'
+  // default overrides this and breaks file uploads.
 });
 
 // Request interceptor — attach token from localStorage if present
