@@ -74,10 +74,10 @@ cd ../frontend && npm install
 
 ```env
 DATABASE_URL=postgresql://testbase_oy8e_user:dt9U75rHmIkONpsVwRwpTrOGRHJVYgT0@dpg-d85tuonavr4c73d9abt0-a/testbase_oy8e
-JWT_SECRET="your-super-secret-key-minimum-32-characters-change-this"
-CLOUDINARY_CLOUD_NAME="your_cloud_name"
-CLOUDINARY_API_KEY="your_api_key"
-CLOUDINARY_API_SECRET="your_api_secret"
+JWT_SECRET=your-super-secret-key-minimum-32-characters-change-this
+CLOUDINARY_CLOUD_NAME=dcode98s7
+CLOUDINARY_API_KEY=242217531587476
+CLOUDINARY_API_SECRET=uKC3adCKlmwqQlgOhxbSt5JHr1o
 NODE_ENV=development
 PORT=4000
 FRONTEND_URL=http://localhost:3000
