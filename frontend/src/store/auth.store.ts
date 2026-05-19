@@ -21,19 +21,23 @@ export interface User {
 interface AuthStore {
   user: User | null;
   isLoading: boolean;
+  hydrated: boolean;
   setUser: (user: User | null) => void;
   login: (identifier: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   fetchMe: () => Promise<void>;
+  setHydrated: () => void;
 }
 
 export const useAuthStore = create<AuthStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isLoading: false,
+      hydrated: false,
 
       setUser: (user) => set({ user }),
+      setHydrated: () => set({ hydrated: true }),
 
       login: async (identifier, password) => {
         set({ isLoading: true });
@@ -56,16 +60,30 @@ export const useAuthStore = create<AuthStore>()(
         }
       },
 
+      // Called on app init to validate persisted user against server
       fetchMe: async () => {
+        const token = localStorage.getItem('access_token');
+        if (!token && !get().user) return;
         try {
           const { data } = await api.get('/auth/me');
           set({ user: data.user });
         } catch {
-          set({ user: null });
-          localStorage.removeItem('access_token');
+          // Token expired but refresh cookie may be valid — api interceptor handles it
+          // Only clear if we get a definitive 401 after refresh attempt
+          const { user } = get();
+          if (!user) {
+            localStorage.removeItem('access_token');
+          }
         }
       },
     }),
-    { name: 'geekhoot-auth', partialize: (state) => ({ user: state.user }) }
+    {
+      name: 'geekhoot-auth',
+      // Persist full user object so refresh doesn't lose session
+      partialize: (state) => ({ user: state.user }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated();
+      },
+    }
   )
 );

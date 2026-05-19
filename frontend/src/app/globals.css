@@ -5,9 +5,9 @@
 @tailwind utilities;
 
 :root {
-  --brand: #f97316;
-  --brand-dark: #ea580c;
-  --brand-light: #fed7aa;
+  --brand: #ff5200;
+  --brand-dark: #e04700;
+  --brand-light: #ffddd1;
   --bg: #ffffff;
   --bg-secondary: #fafafa;
   --fg: #0f0f0f;
@@ -24,8 +24,10 @@
   --border: #2a2a2a;
 }
 
-* {
-  box-sizing: border-box;
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -33,53 +35,99 @@ body {
   color: var(--fg);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition: background 0.2s, color 0.2s;
 }
 
-/* Skeleton shimmer */
+/* ─── Skeleton shimmer ──────────────────────────────────── */
 .skeleton {
-  background: linear-gradient(90deg, var(--border) 25%, var(--bg-secondary) 50%, var(--border) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--border) 25%,
+    var(--bg-secondary) 50%,
+    var(--border) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: var(--radius);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
+/* ─── Custom scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--fg-muted); }
 
-/* Focus ring */
+/* ─── Focus ring ────────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 
-/* Smooth page transitions */
+/* ─── Page transition ───────────────────────────────────── */
 .page-enter {
-  animation: fadeUp 0.35s ease-out;
+  animation: fadeUp 0.38s ease-out both;
 }
 
+/* ─── Brand color utilities ─────────────────────────────── */
+.bg-brand-500 { background-color: var(--brand); }
+.text-brand-500 { color: var(--brand); }
+.border-brand-500 { border-color: var(--brand); }
+.bg-brand-50 { background-color: #fff4ef; }
+.dark .bg-brand-900\/20 { background-color: rgba(255, 82, 0, 0.15); }
+.text-brand-600 { color: var(--brand-dark); }
+.hover\:bg-brand-600:hover { background-color: var(--brand-dark); }
+.bg-brand-100 { background-color: #ffe9df; }
+.text-brand-400 { color: #ff7c40; }
+.ring-brand-500 { --tw-ring-color: var(--brand); }
+.shadow-brand-500\/25 { --tw-shadow-color: rgba(255, 82, 0, 0.25); }
+.bg-brand-200\/40 { background-color: rgba(255, 176, 145, 0.4); }
+.hover\:border-brand-300:hover { border-color: #ff9f80; }
+
+/* ─── Glass utility ─────────────────────────────────────── */
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .glass {
     backdrop-filter: blur(16px);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
   .dark .glass {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.06);
   }
+  .custom-scrollbar::-webkit-scrollbar { height: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 }
 
+/* ─── Keyframes ─────────────────────────────────────────── */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─── Animation classes ─────────────────────────────────── */
+.animate-fade-in    { animation: fadeIn 0.4s ease-out both; }
+.animate-scale-in   { animation: scaleIn 0.35s ease-out both; }
+.animate-slide-in-r { animation: slideInRight 0.4s ease-out both; }

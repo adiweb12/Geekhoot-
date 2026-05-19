@@ -5,7 +5,7 @@ import { WhyGeekhoot } from '@/components/home/why-geekhoot';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Geekhoot — Tech Gear You Love',
+  title: 'Geekhoot — Premium Custom Merch',
 };
 
 export default function HomePage() {

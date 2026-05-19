@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/ui/theme-provider';
 import { QueryProvider } from '@/components/ui/query-provider';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
+import { ClientWrapper } from '@/components/splash/client-wrapper';
 import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
@@ -16,12 +17,12 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: { default: 'Geekhoot — Tech Gear You Love', template: '%s | Geekhoot' },
-  description: 'Shop the latest tech gear, peripherals, and accessories. Fast delivery across India.',
-  keywords: ['tech', 'gadgets', 'keyboards', 'gaming', 'peripherals', 'India'],
+  title: { default: 'Geekhoot — Premium Custom Merch', template: '%s | Geekhoot' },
+  description: 'Shop premium custom merch — T-shirts, bottles, cups, name slips & more. Fast delivery across India.',
+  keywords: ['custom merch', 'custom t-shirts', 'name slips', 'printed bottles', 'custom cups', 'India'],
   openGraph: {
     title: 'Geekhoot',
-    description: 'Tech gear you love',
+    description: 'Premium Custom Merch',
     type: 'website',
   },
 };
@@ -29,18 +30,24 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#f97316',
+  themeColor: '#ff5200',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${GeistSans.variable} ${GeistMono.variable} ${syne.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${GeistSans.variable} ${GeistMono.variable} ${syne.variable}`}
+    >
       <body className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--fg)] antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <QueryProvider>
-            <Navbar />
-            <main className="flex-1 page-enter">{children}</main>
-            <Footer />
+            <ClientWrapper>
+              <Navbar />
+              <main className="flex-1 page-enter">{children}</main>
+              <Footer />
+            </ClientWrapper>
             <Toaster
               position="top-right"
               toastOptions={{

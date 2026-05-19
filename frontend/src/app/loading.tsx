@@ -5,7 +5,7 @@ export default function Loading() {
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className="w-2.5 h-2.5 rounded-full bg-brand-500 animate-bounce"
+            className="w-3 h-3 rounded-full bg-[#ff5200] animate-bounce"
             style={{ animationDelay: `${i * 0.15}s` }}
           />
         ))}

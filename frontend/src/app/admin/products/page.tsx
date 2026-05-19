@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import toast from 'react-hot-toast';
 
-const CATEGORIES = ['Keyboards', 'Mice', 'Monitors', 'Audio', 'Accessories', 'Components'];
+const CATEGORIES = ['Custom T-Shirts', 'Name Slips', 'Printed Bottles', 'Custom Cups', 'Photo Frames', 'Keychain', 'Stationery', 'Tech Gadgets'];
 
 type ProductFormData = {
   name: string;
@@ -23,7 +23,7 @@ type ProductFormData = {
 };
 
 const defaultForm: ProductFormData = {
-  name: '', description: '', price: '', category: 'Keyboards', stock: '', tags: '', features: '',
+  name: '', description: '', price: '', category: 'Custom T-Shirts', stock: '', tags: '', features: '',
 };
 
 export default function AdminProductsPage() {
@@ -124,7 +124,7 @@ export default function AdminProductsPage() {
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
           placeholder="Search products…"
-          className="w-full pl-9 pr-4 py-2 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+          className="w-full pl-9 pr-4 py-2 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
       </div>
 
@@ -222,7 +222,7 @@ export default function AdminProductsPage() {
                     rows={3}
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
-                    className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
+                    className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
                   />
                 </div>
 
@@ -251,7 +251,7 @@ export default function AdminProductsPage() {
                     required
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
-                    className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
                   >
                     {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                   </select>
@@ -271,7 +271,7 @@ export default function AdminProductsPage() {
                     value={form.features}
                     placeholder="Hot-swappable switches&#10;RGB backlight&#10;Bluetooth 5.0"
                     onChange={(e) => setForm({ ...form, features: e.target.value })}
-                    className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
+                    className="w-full px-3 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg)] text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
                   />
                 </div>
 
