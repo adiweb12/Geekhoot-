@@ -125,7 +125,6 @@ export const login = async (data: LoginData) => {
 export const refresh = async (token: string) => {
   const storedToken = await prisma.refreshToken.findUnique({
     where: { token },
-    include: { },
   });
 
   if (!storedToken || storedToken.expiresAt < new Date()) {
