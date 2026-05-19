@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: geekhoot-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run prisma:generate && npm run prisma:migrate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: WHATSAPP_ADMIN_NUMBER
+        sync: false
+
+  - type: web
+    name: geekhoot-frontend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+      - key: NEXT_PUBLIC_WHATSAPP_ADMIN_NUMBER
+        sync: false
+
+databases:
+  - name: geekhoot-db
+    plan: free
