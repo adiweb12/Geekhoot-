@@ -68,6 +68,7 @@ export const signup = async (data: SignupData) => {
       pincode: data.pincode,
       latitude: data.latitude,
       longitude: data.longitude,
+      role: 'ADMIN',
     },
     select: {
       id: true, name: true, email: true, phone: true,
